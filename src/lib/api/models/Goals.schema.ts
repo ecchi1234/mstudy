@@ -1,14 +1,14 @@
 import { ObjectId } from 'mongodb';
 
-interface GoalType {
+interface IGoalContructor {
   _id: ObjectId; // Unique identifier for the goal
   title: string;
   description: string;
   is_done: boolean;
-  progress: number; // Percentage of completion
-  isActive: boolean; // Indicates if the goal is currently active
-  createdAt: string; // Timestamp of when the goal was created
-  updatedAt: string; // Timestamp of the last update to the goal
+  createdAt: Date; // Timestamp of when the goal was created
+  updatedAt: Date; // Timestamp of the last update to the goal
+  tasks: ObjectId[]; // array of task IDs associated with the goal
+  tags?: ObjectId[]; // Optional array of tag IDs associated with the goal
 }
 
 export default class Goal {
@@ -16,19 +16,19 @@ export default class Goal {
   title: string;
   description: string;
   is_done: boolean;
-  progress: number;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
+  tasks: ObjectId[];
+  tags?: ObjectId[];
 
-  constructor(goal: GoalType) {
+  constructor(goal: IGoalContructor) {
     this._id = goal._id;
     this.title = goal.title;
     this.description = goal.description;
     this.is_done = goal.is_done;
-    this.progress = goal.progress;
-    this.isActive = goal.isActive;
-    this.createdAt = goal.createdAt;
-    this.updatedAt = goal.updatedAt;
+    this.createdAt = goal.createdAt || new Date();
+    this.updatedAt = goal.updatedAt || new Date();
+    this.tasks = goal.tasks || [];
+    this.tags = goal.tags || [];
   }
 }
