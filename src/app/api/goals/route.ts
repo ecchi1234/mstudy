@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
-    const url = new URL(request.url);
+    const url = request.nextUrl;
     const { page, limit, order_by, order_option } = Object.fromEntries(
       url.searchParams.entries()
     );
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { message: 'Goal created successfully', goal: result },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     console.error('Error creating goal:', error);

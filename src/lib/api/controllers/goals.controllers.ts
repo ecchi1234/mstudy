@@ -48,14 +48,20 @@ export async function createGoalController(goalData: IGoalRequestBody) {
   }
 }
 
-export async function updateGoalController() {
+export async function updateGoalController({
+  goalId,
+  goalData,
+}: {
+  goalId: string;
+  goalData: IGoalRequestBody;
+}) {
   try {
     // Here you would typically call a service method to update a goal
-    // const updatedGoal = await goalService.updateGoal(goalId, goalData);
+    const updatedGoal = await goalService.updateGoal(goalId, goalData);
 
     return {
       message: 'Goal updated successfully',
-      // data: updatedGoal,
+      data: updatedGoal,
     };
   } catch (error) {
     console.error('Error updating goal:', error);
@@ -63,10 +69,10 @@ export async function updateGoalController() {
   }
 }
 
-export async function deleteGoalController() {
+export async function deleteGoalController(goalId: string) {
   try {
     // Here you would typically call a service method to delete a goal
-    // await goalService.deleteGoal(goalId);
+    await goalService.deleteGoal(goalId);
 
     return {
       message: 'Goal deleted successfully',
@@ -74,5 +80,18 @@ export async function deleteGoalController() {
   } catch (error) {
     console.error('Error deleting goal:', error);
     throw new Error('Failed to delete goal');
+  }
+}
+
+export async function getGoalById(goalId: string) {
+  try {
+    const goal = await goalService.getGoalById(goalId);
+    return {
+      message: 'Goal fetched successfully',
+      data: goal,
+    };
+  } catch (error) {
+    console.error('Error fetching goal:', error);
+    throw new Error('Failed to fetch goal');
   }
 }
